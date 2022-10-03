@@ -4,15 +4,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   mode: 'development',
   target: 'web',
-	devServer: {
-		static: {
-			directory: path.resolve(__dirname, 'dist'),
-		},
-		port: 3001,
-		open: true,
-		hot: true,
-		compress: true,
-		historyApiFallback: true,
+  devServer: {
+    static: {
+      directory: path.resolve(__dirname, 'dist'),
+    },
+    port: 3001,
+    open: true,
+    hot: true,
+    compress: true,
+    historyApiFallback: true,
   },
   entry: './src/index.js',
   plugins: [
@@ -28,7 +28,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-				    use: ['style-loader", "css-loader'],
+        use: ['style-loader", "css-loader'],
       },
       {
         test: /\.js$/,
