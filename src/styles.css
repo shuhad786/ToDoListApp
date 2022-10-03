@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+/* headerColor: rgb(78, 2, 255); */
+
+* {
+  color: rgb(185, 184, 184);
+  font-family: 'Varela Round', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  background-color: #16161d;
+}
+
+.page {
+  flex: 1;
+  max-width: 75%;
+  min-height: 85%;
+  background-color: #222258;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  text-align: center;
+  border-radius: 15px;
+  gap: 1.5em;
+  padding: 1em;
+}
+
+.header {
+  font-weight: 300;
+  font-size: 3em;
+  text-shadow: 0 0 25px rgb(94, 25, 255);
+}
+
+.toDoList {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 1em;
+}
+
+.entryContainer {
+  flex: 1;
+  gap: 1em;
+  max-height: 2em;
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  justify-items: center;
+}
+
+.toDoInput {
+  width: 65%;
+  height: 80%;
+  border-radius: 5px;
+  justify-self: flex-end;
+  padding: 0.2em 0.8em;
+  outline: none;
+  font-size: 1em;
+}
+
+.addToDo {
+  justify-self: flex-start;
+  border: none;
+  background-color: inherit;
+}
+
+.toDoListItemContainer {
+  flex: 1;
+  gap: 10em;
+}
+
+.clearCompleted {
+  background-color: whitesmoke;
+  width: 40%;
+  margin-left: 30%;
+  margin-bottom: 50%;
+  border-radius: 5px;
+  border-color: rgb(94, 25, 255);
+}
+
+.fa-arrow-turn-down {
+  transform: rotate(90deg);
+}
