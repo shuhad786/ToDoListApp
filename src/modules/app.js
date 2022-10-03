@@ -1,8 +1,9 @@
+/*eslint no-undefined: "error"*/
+
 import ListTemplate from './templateList.js';
 import localGet from './storage.js';
 
 const todoListContainer = document.querySelector('.toDoListItemContainer');
-const addInputField = document.querySelector('.toDoInput');
 
 const addList = (description, completed, index) => {
   const listAdded = new ListTemplate(description, completed, index);
@@ -32,4 +33,4 @@ window.removeList = (index) => {
   displayList();
 };
 
-export { addList };
+export default addList;

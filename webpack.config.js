@@ -3,17 +3,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  target: "web",
+  target: 'web',
 	devServer: {
 		static: {
-			directory: path.resolve(__dirname, "dist"),
+			directory: path.resolve(__dirname, 'dist'),
 		},
 		port: 3001,
 		open: true,
 		hot: true,
 		compress: true,
 		historyApiFallback: true,
-	},
+  },
   entry: './src/index.js',
   plugins: [
     new HtmlWebpackPlugin({
@@ -28,13 +28,13 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-				use: ["style-loader", "css-loader"],
+				    use: ['style-loader", "css-loader'],
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
-      }
+      },
     ],
   },
 };

@@ -1,5 +1,5 @@
 import './styles.css';
-import { addList } from './modules/app.js';
+import addList from './modules/app.js';
 import localGet from './modules/storage.js';
 
 const addBtn = document.querySelector('.addToDo');
