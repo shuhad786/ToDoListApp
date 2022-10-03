@@ -8,7 +8,7 @@ module.exports = {
     static: {
       directory: path.resolve(__dirname, 'dist'),
     },
-    port: 3001,
+    port: 3002,
     open: true,
     hot: true,
     compress: true,
@@ -28,7 +28,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader", "css-loader'],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.js$/,

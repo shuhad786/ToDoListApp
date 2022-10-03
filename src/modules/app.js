@@ -5,8 +5,8 @@ import localGet from './storage.js';
 
 const todoListContainer = document.querySelector('.toDoListItemContainer');
 
-const addList = (description, completed, index) => {
-  const listAdded = new ListTemplate(description, completed, index);
+const addList = (description, completed) => {
+  const listAdded = new ListTemplate(description, completed);
   localGet.push(listAdded);
   localStorage.setItem('listStorage', JSON.stringify(localGet));
   window.location.reload();
