@@ -5,13 +5,6 @@ import localGet from './storage.js';
 
 const todoListContainer = document.querySelector('.toDoListItemContainer');
 
-const addList = (description, completed, index) => {
-  const listAdded = new ListTemplate(description, completed, index);
-  localGet.push(listAdded);
-  localStorage.setItem('listStorage', JSON.stringify(localGet));
-  displayList();
-};
-
 const displayList = () => {
   todoListContainer.innerHTML = '';
   localGet.forEach((item, id) => {
@@ -25,6 +18,13 @@ const displayList = () => {
       </div>
     `;
   });
+};
+
+const addList = (description, completed, index) => {
+  const listAdded = new ListTemplate(description, completed, index);
+  localGet.push(listAdded);
+  localStorage.setItem('listStorage', JSON.stringify(localGet));
+  displayList();
 };
 
 window.removeList = () => {
@@ -43,15 +43,13 @@ window.removeList = () => {
 
 window.updateList = (id) => {
   const updateInput = document.querySelector(`#input-${id}`).value;
-  
-  const updatedArray = localGet.map(item => {
-    if(item.index -1 === id)
-    {
+  const updatedArray = localGet.map((item) => {
+    if (item.index - 1 === id) {
       item.description = updateInput;
     }
     return item;
   });
-  
+
   localStorage.setItem('listStorage', JSON.stringify(updatedArray));
 };
 
