@@ -9,10 +9,10 @@ const addList = (description, completed, index) => {
   const listAdded = new ListTemplate(description, completed, index);
   localGet.push(listAdded);
   localStorage.setItem('listStorage', JSON.stringify(localGet));
-  window.location.reload();
+  displayList();
 };
 
-window.displayList = () => {
+const displayList = () => {
   todoListContainer.innerHTML = '';
   localGet.forEach((item, id) => {
     todoListContainer.innerHTML
@@ -20,7 +20,7 @@ window.displayList = () => {
       <div class='toDoItem'>
         <input class='item' id='check-${id}', completed)' type='checkbox' value=${item.completed}>
         <input type='text' class='findInput' id='input-${id}' value=${item.description} />
-        <i class='fa-solid fa-file-pen' id='options-${id}'></i>
+        <i onclick='updateList(${id})' class='fa-solid fa-file-pen' id='options-${id}'></i>
         <i onclick='removeList(${id})' class='fa-solid fa-trash' id='delete-${id}'></i>
       </div>
     `;
@@ -28,7 +28,7 @@ window.displayList = () => {
 };
 
 window.removeList = () => {
-  const deleteBtn = Array.from(document.querySelectorAll('.fa-trash'));
+  const deleteBtn = [...document.querySelectorAll('.fa-trash')];
   deleteBtn.forEach((item) => {
     item.addEventListener('click', () => {
       localGet.splice(deleteBtn.indexOf(item), 1);
@@ -36,9 +36,23 @@ window.removeList = () => {
         item.index = index + 1;
       });
       localStorage.setItem('listStorage', JSON.stringify(localGet));
-      window.location.reload();
+      displayList();
     });
   });
 };
 
-export default addList;
+window.updateList = (id) => {
+  const updateInput = document.querySelector(`#input-${id}`).value;
+  
+  const updatedArray = localGet.map(item => {
+    if(item.index -1 === id)
+    {
+      item.description = updateInput;
+    }
+    return item;
+  });
+  
+  localStorage.setItem('listStorage', JSON.stringify(updatedArray));
+};
+
+export { addList, displayList };
