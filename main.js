@@ -6,7 +6,17 @@
  * or disable the default devtool with "devtool: false".
  * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
-/******/ (() => { // webpackBootstrap
+(function webpackUniversalModuleDefinition(root, factory) {
+	if(typeof exports === 'object' && typeof module === 'object')
+		module.exports = factory();
+	else if(typeof define === 'function' && define.amd)
+		define([], factory);
+	else {
+		var a = factory();
+		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
+	}
+})(self, () => {
+return /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
@@ -16,7 +26,7 @@
   \**********************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ \"./src/styles.css\");\n/* harmony import */ var _modules_app_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/app.js */ \"./src/modules/app.js\");\n\n\nconst addBtn = document.querySelector('.addToDo');\nconst todoInput = document.querySelector('.toDoInput');\naddBtn.addEventListener('click', () => {\n  (0,_modules_app_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(todoInput.value, false);\n});\n\n//# sourceURL=webpack://todolist/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ \"./src/styles.css\");\n/* harmony import */ var _modules_app_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/app.js */ \"./src/modules/app.js\");\n/* harmony import */ var _modules_storage_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/storage.js */ \"./src/modules/storage.js\");\n\n\n\nconst addBtn = document.querySelector('.addToDo');\nconst todoInput = document.querySelector('.toDoInput');\nconst List = new _modules_app_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]();\nList.displayList();\nList.removeList();\naddBtn.addEventListener('click', () => {\n  List.addList(todoInput.value, false, _modules_storage_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"].length + 1);\n});\n\n//# sourceURL=webpack://todolist/./src/index.js?");
 
 /***/ }),
 
@@ -26,7 +36,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sty
   \****************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _templateList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./templateList.js */ \"./src/modules/templateList.js\");\n/* harmony import */ var _storage_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./storage.js */ \"./src/modules/storage.js\");\n/* eslint no-undefined: \"error\" */\n\n\nconst todoListContainer = document.querySelector('.toDoListItemContainer');\n\nconst addList = (description, completed) => {\n  const listAdded = new _templateList_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"](description, completed);\n  _storage_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"].push(listAdded);\n  localStorage.setItem('listStorage', JSON.stringify(_storage_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]));\n  window.location.reload();\n};\n\nwindow.displayList = () => {\n  todoListContainer.innerHTML = '';\n  _storage_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"].forEach((item, id) => {\n    todoListContainer.innerHTML += `\n        <div class='toDoItem'>\n          <input class='item' id='check-${id}', completed)' type='checkbox' value=${item.completed}>\n          <input type='text' class='findInput' id='input-${id}' value=${item.description} />\n          <i onclick='updateList(${id})' class='fa-solid fa-file-pen' id='options-${id}'></i>\n          <i onclick='removeList(${id})'  class='fa-solid fa-trash' id='delete-${id}'></i>\n        </div>\n      `;\n  });\n};\n\nwindow.removeList = index => {\n  _storage_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"].splice(index, 1);\n  localStorage.setItem('listStorage', JSON.stringify(_storage_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]));\n  window.location.reload();\n};\n\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (addList);\n\n//# sourceURL=webpack://todolist/./src/modules/app.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _templateList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./templateList.js */ \"./src/modules/templateList.js\");\n/* eslint no-undefined: \"error\" */\n\nconst todoListContainer = document.querySelector('.toDoListItemContainer');\nconst todoInput = document.querySelector('.toDoInput');\n\nclass ToDoList {\n  constructor() {\n    this.array = JSON.parse(localStorage.getItem('listStorage')) || [];\n  }\n\n  displayList = () => {\n    todoListContainer.innerHTML = '';\n    this.array.forEach((item, id) => {\n      todoListContainer.innerHTML += `\n      <div class='toDoItem' id='${id}'>\n        <input class='item' id='check-${id}', completed)' type='checkbox' value=${item.completed && 'checked'}>\n        <input type='text' class='findInput' id='input-${id}' value=${item.description} />\n        <i class='fa-solid fa-file-pen' id='options-${id}'></i>\n        <i class='fa-solid fa-trash' id='delete-${id}'></i>\n      </div>\n    `;\n      item.index = this.array.indexOf(item);\n    });\n  };\n  addList = (description, completed, index) => {\n    const listAdded = new _templateList_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"](description, completed, index + 1);\n    this.array.push(listAdded);\n    localStorage.setItem('listStorage', JSON.stringify(this.array));\n    this.displayList();\n    setTimeout(() => {\n      todoInput.value = '';\n    }, 1000);\n  };\n  removeList = () => {\n    const deleteBtns = [...document.getElementsByClassName('fa-trash')];\n    deleteBtns.forEach(item => {\n      item.addEventListener('click', e => {\n        this.array.splice(e.target.id, 1, item);\n        console.log(e.target.id); //localStorage.setItem('listStorage', JSON.stringify(this.array));\n        //window.location.reload();\n      });\n    });\n  };\n}\n\n;\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ToDoList);\n\n//# sourceURL=webpack://todolist/./src/modules/app.js?");
 
 /***/ }),
 
@@ -229,5 +239,7 @@ eval("\n\n/* istanbul ignore next  */\nfunction styleTagTransform(css, styleElem
 /******/ 	// This entry module can't be inlined because the eval devtool is used.
 /******/ 	var __webpack_exports__ = __webpack_require__("./src/index.js");
 /******/ 	
+/******/ 	return __webpack_exports__;
 /******/ })()
 ;
+});
