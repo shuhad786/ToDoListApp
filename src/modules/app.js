@@ -4,6 +4,7 @@ import ListTemplate from './templateList.js';
 import localGet from './storage.js';
 
 const todoListContainer = document.querySelector('.toDoListItemContainer');
+const todoInput = document.querySelector('.toDoInput');
 
 const displayList = () => {
   todoListContainer.innerHTML = '';
@@ -11,9 +12,9 @@ const displayList = () => {
     todoListContainer.innerHTML
     += `
       <div class='toDoItem'>
-        <input class='item' id='check-${id}', completed)' type='checkbox' value=${item.completed}>
+        <input class='item' id='check-${id}', "completed")' type='checkbox' ${item.completed ? 'checked' : ''} onclick='updateList(${id}, "completed")'>
         <input type='text' class='findInput' id='input-${id}' value=${item.description} />
-        <i onclick='updateList(${id})' class='fa-solid fa-file-pen' id='options-${id}'></i>
+        <i onclick='updateList(${id}, "description")' class='fa-solid fa-file-pen' id='options-${id}'></i>
         <i onclick='removeList(${id})' class='fa-solid fa-trash' id='delete-${id}'></i>
       </div>
     `;
@@ -24,7 +25,9 @@ const addList = (description, completed, index) => {
   const listAdded = new ListTemplate(description, completed, index);
   localGet.push(listAdded);
   localStorage.setItem('listStorage', JSON.stringify(localGet));
-  displayList();
+  setTimeout(() => {
+    todoInput.value = '';
+  }, 1000);
 };
 
 window.removeList = () => {
@@ -41,11 +44,22 @@ window.removeList = () => {
   });
 };
 
-window.updateList = (id) => {
+window.updateList = (id, field) => {
   const updateInput = document.querySelector(`#input-${id}`).value;
+  const updateCheckbox = document.querySelector(`#check-${id}`).checked;
+
   const updatedArray = localGet.map((item) => {
     if (item.index - 1 === id) {
-      item.description = updateInput;
+      switch (field) {
+        case 'description':
+          item[field] = updateInput;
+          break;
+        case 'completed':
+          item[field] = updateCheckbox;
+          break;
+        default:
+          return item;
+      }
     }
     return item;
   });
