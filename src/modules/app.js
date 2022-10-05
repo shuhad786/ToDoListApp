@@ -50,32 +50,19 @@ window.removeList = () => {
   });
 };
 
-window.updateList = (id, field) => {
+window.updateList = (id) => {
   const updateInput = document.querySelector(`#input-${id}`).value;
-
   const updateCheckbox = document.querySelector(`#check-${id}`).checked;
-
-  const updatedArray = localGet.map((item) => {
-    if (item.index - 1 === id) {
-      switch (field) {
-        case 'description':
-          item[field] = updateInput;
-          break;
-        case 'completed':
-          item[field] = updateCheckbox;
-          break;
-        default:
-          return item;
-      }
-
   const updatedArray = localGet.map((item) => {
     if (item.index - 1 === id) {
       item.description = updateInput;
-
+    }
+    if (item.index - 1 === id) {
+      item.completed = updateCheckbox;
     }
     return item;
   });
-
+  
   localStorage.setItem('listStorage', JSON.stringify(updatedArray));
 };
 
