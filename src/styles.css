@@ -1,9 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 
-/* headerColor: rgb(78, 2, 255); */
+:root {
+  --bg-color: #16161d;
+  --border-radius: 5px;
+  --page-bg-color: rgba(40, 34, 54, 0.473);
+  --item-bg-color: rgba(54, 27, 116, 0.445);
+  --text-color: white;
+}
 
 * {
-  color: rgb(97, 97, 97);
   font-family: 'Varela Round', sans-serif;
 }
 
@@ -16,76 +21,153 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  background-color: #16161d;
+  background-color: var(--bg-color);
 }
 
 .page {
   flex: 1;
   max-width: 75%;
   min-height: 85%;
-  background-color: #3a00c0;
+  background-color: var(--page-bg-color);
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   text-align: center;
   border-radius: 15px;
-  gap: 1.5em;
+  gap: 1em;
   padding: 1em;
+  justify-content: center;
 }
 
 .header {
+  max-height: 1em;
   font-weight: 300;
+  color: white;
   font-size: 3em;
-  text-shadow: 0 0 25px rgb(0, 0, 0);
+  position: relative;
+  z-index: 1;
+}
+
+.header::before {
+  content: attr(Heading);
+  background: linear-gradient(to right, #05d6d9, #f907fd);
+  position: absolute;
+  z-index: 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-stroke: 20px transparent;
+  filter: blur(17px);
+  opacity: 0.5;
 }
 
 .toDoList {
-  flex: 1;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
-  text-align: center;
-  gap: 1em;
+  justify-self: center;
+  overflow-y: auto;
 }
 
 .entryContainer {
-  flex: 1;
-  gap: 1em;
-  max-height: 2em;
   display: grid;
-  grid-template-columns: 4fr 1fr;
-  justify-items: center;
+  grid-template-columns: 65% 2em;
+  height: 2em;
+  place-items: end;
+  gap: 0.6em;
+  padding-bottom: 1em;
 }
 
 .toDoInput {
-  width: 65%;
-  height: 80%;
-  border-radius: 5px;
-  justify-self: flex-end;
-  padding: 0.2em 0.8em;
+  min-height: 2em;
+  width: 50%;
+  border-radius: var(--border-radius);
   outline: none;
-  font-size: 1em;
+  border: none;
+  padding: 0 0.3em;
+  text-align: center;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+.toDoInput:focus {
+  box-shadow: inset 0 0 3px 2px #05d6d9;
 }
 
 .addToDo {
-  justify-self: flex-start;
+  color: var(--text-color);
   border: none;
-  background-color: inherit;
+  background-color: var(--bg-color);
+  border-radius: var(--border-radius);
+  outline: none;
+  padding: 0.4em;
+  justify-self: left;
 }
 
 .toDoListItemContainer {
   flex: 1;
-  gap: 10em;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1em;
+  background-color: var(--bg-color);
+  border-radius: var(--border-radius);
+  min-height: 100%;
+  align-items: center;
+  padding: 1em 0;
+}
+
+.toDoItem {
+  display: flex;
+  justify-content: center;
+  min-width: 35%;
+  height: 2.5em;
+  gap: 0.5em;
+  background-color: var(--page-bg-color);
+  padding: 0;
+  align-items: center;
+  border-radius: var(--border-radius);
+}
+
+.item {
+  height: 1.4em;
+  width: 1.4em;
+  border-radius: var(--border-radius);
+  background-color: var(--bg-color);
+}
+
+.findInput {
+  width: 70%;
+  height: 1em;
+  padding: 0.3em;
 }
 
 .clearCompleted {
-  background-color: whitesmoke;
-  width: 40%;
-  margin-left: 30%;
-  margin-bottom: 50%;
-  border-radius: 5px;
-  border-color: rgb(94, 25, 255);
+  width: 30%;
+  align-self: center;
+  padding: 0.4em;
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  border: none;
+  background: radial-gradient(#05d6d9, #f907fd);
+  letter-spacing: 0.1em;
+  font-weight: bold;
+  font-size: 1em;
 }
 
 .fa-arrow-turn-down {
-  transform: rotate(90deg);
+  rotate: 90deg;
+}
+
+.fa-file-pen {
+  background: linear-gradient(45deg, #05d6d9, #f907fd);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.fa-trash {
+  background: linear-gradient(-45deg, #05d6d9, #f907fd);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
