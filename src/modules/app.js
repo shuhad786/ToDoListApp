@@ -7,7 +7,6 @@ const todoListContainer = document.querySelector('.toDoListItemContainer');
 
 const todoInput = document.querySelector('.toDoInput');
 
-
 const displayList = () => {
   todoListContainer.innerHTML = '';
   localGet.forEach((item, id) => {
@@ -27,13 +26,10 @@ const addList = (description, completed, index) => {
   const listAdded = new ListTemplate(description, completed, index);
   localGet.push(listAdded);
   localStorage.setItem('listStorage', JSON.stringify(localGet));
-
   setTimeout(() => {
     todoInput.value = '';
   }, 1000);
-
   displayList();
-
 };
 
 window.removeList = () => {
@@ -62,7 +58,7 @@ window.updateList = (id) => {
     }
     return item;
   });
-  
+
   localStorage.setItem('listStorage', JSON.stringify(updatedArray));
 };
 
