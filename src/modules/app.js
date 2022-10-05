@@ -4,7 +4,9 @@ import ListTemplate from './templateList.js';
 import localGet from './storage.js';
 
 const todoListContainer = document.querySelector('.toDoListItemContainer');
+
 const todoInput = document.querySelector('.toDoInput');
+
 
 const displayList = () => {
   todoListContainer.innerHTML = '';
@@ -25,9 +27,13 @@ const addList = (description, completed, index) => {
   const listAdded = new ListTemplate(description, completed, index);
   localGet.push(listAdded);
   localStorage.setItem('listStorage', JSON.stringify(localGet));
+
   setTimeout(() => {
     todoInput.value = '';
   }, 1000);
+
+  displayList();
+
 };
 
 window.removeList = () => {
@@ -46,6 +52,7 @@ window.removeList = () => {
 
 window.updateList = (id, field) => {
   const updateInput = document.querySelector(`#input-${id}`).value;
+
   const updateCheckbox = document.querySelector(`#check-${id}`).checked;
 
   const updatedArray = localGet.map((item) => {
@@ -60,6 +67,11 @@ window.updateList = (id, field) => {
         default:
           return item;
       }
+
+  const updatedArray = localGet.map((item) => {
+    if (item.index - 1 === id) {
+      item.description = updateInput;
+
     }
     return item;
   });

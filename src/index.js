@@ -5,6 +5,7 @@ import localGet from './modules/storage.js';
 
 const addBtn = document.querySelector('.addToDo');
 const todoInput = document.querySelector('.toDoInput');
+
 const clearAll = document.querySelector('.clearCompleted');
 
 window.addEventListener('load', () => {
