@@ -9,8 +9,7 @@ describe('Add and Remove Testing', () => {
   <div id='toDoListItemContainer'></div>
   `;
 
-  const ListTemplate = require('./src/modules/app.js');
-  const newTask = new ListTemplate();
+  const newTask = require('./src/modules/app.js');
 
   const Input = document.getElementById('toDoInput');
   const todolist = document.getElementById('toDoListItemContainer');
@@ -22,16 +21,17 @@ describe('Add and Remove Testing', () => {
     newTask.addList();
     Input.value = 'Task 3';
     newTask.addList();
+    Input.value = 'Task 4';
+    newTask.addList();
     const listItems = todolist.querySelectorAll('.toDoItem');
-    expect(listItems).toHaveLength(3);
+    expect(listItems).toHaveLength(4);
   });
 
-  test('Removing items from list', () => {
+  test('Removing item from list', () => {
     const btn = document.querySelectorAll('.del-btn');
     btn[0].click();
     btn[1].click();
-    btn[2].click();
     const listItems = todolist.querySelectorAll('.toDoItem');
-    expect(listItems).toHaveLength(0);
+    expect(listItems).toHaveLength(3);
   });
 });
