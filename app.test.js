@@ -1,4 +1,6 @@
-/*eslint global-require: "error"*/
+/*
+eslint global-require: "error"
+*/
 
 describe('Add and Remove Testing', () => {
   document.body.innerHTML = `
