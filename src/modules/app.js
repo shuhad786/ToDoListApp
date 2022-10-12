@@ -12,9 +12,7 @@ class ListTemplate {
     this.arrayList = JSON.parse(localStorage.getItem('listStorage')) || [];
   }
 
-  
 displayList = () => {
-  
   todoListContainer.innerHTML = '';
   this.arrayList.forEach((item, id) => {
     todoListContainer.innerHTML
@@ -23,7 +21,7 @@ displayList = () => {
         <input class='item' id='check-${id}', "completed")' type='checkbox' ${item.completed ? 'checked' : ''} onclick='updateList(${id}, "completed")'>
         <input type='text' class='findInput' id='input-${id}' value=${item.description} />
         <i onclick='updateList(${id}, "description")' class='fa-solid fa-file-pen' id='options-${id}'></i>
-        <i onclick='removeList(${id})' class='fa-solid fa-trash' id='delete-${id}'></i>
+        <i onclick='removeList(${id})' class='fa-solid fa-trash del-btn' id='delete-${id}'></i>
       </div>
     `;
   });
@@ -63,11 +61,11 @@ updateList = (id) => {
     if (item.index - 1 === id) {
       item.completed = updateCheckbox;
     }
-   
+
     return item;
   });
-  console.log(updateCheckbox)
-  
+  console.log(updateCheckbox);
+
   localStorage.setItem('listStorage', JSON.stringify(updatedArray));
 };
 }
