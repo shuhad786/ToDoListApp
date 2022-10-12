@@ -67,10 +67,8 @@ window.updateList = (id) => {
 
     return item;
   });
-  console.log(updateCheckbox);
 
   localStorage.setItem('listStorage', JSON.stringify(updatedArray));
 };
 
-
-module.exports = { addList, displayList, removeList, updateList };
+module.exports = { addList, displayList };

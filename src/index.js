@@ -4,9 +4,7 @@ import clearCompleted from './modules/clearAll.js';
 
 const addBtn = document.querySelector('.addToDo');
 const todoInput = document.querySelector('.toDoInput');
-
 const clearAll = document.querySelector('.clearCompleted');
-
 
 window.addEventListener('load', () => {
   displayList();
