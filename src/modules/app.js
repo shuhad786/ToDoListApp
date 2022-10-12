@@ -1,6 +1,6 @@
 /* eslint no-undefined: "error" */
 
-const todoListContainer = document.getElementById('toDoListItemContainer');
+//const todoListContainer = document.getElementById('toDoListItemContainer');
 
 const todoInput = document.querySelector('.toDoInput');
 
@@ -16,8 +16,10 @@ class ListTemplate {
 const task = new ListTemplate();
 
 const displayList = () => {
+  const data = JSON.parse(localStorage.getItem('listStorage')) || [];
+  const todoListContainer = document.getElementById('toDoListItemContainer');
   todoListContainer.innerHTML = '';
-  task.arrayList.forEach((item, id) => {
+  data.forEach((item, id) => {
     todoListContainer.innerHTML
     += `
       <div class='toDoItem'>
@@ -28,6 +30,7 @@ const displayList = () => {
       </div>
     `;
   });
+  return data.length;
 };
 
 const addList = (description, completed, index) => {
@@ -71,4 +74,4 @@ window.updateList = (id) => {
   localStorage.setItem('listStorage', JSON.stringify(updatedArray));
 };
 
-module.exports = { addList, displayList };
+export { addList, displayList };

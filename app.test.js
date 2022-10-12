@@ -1,6 +1,4 @@
-/*
-eslint global-require: "error"
-*/
+import { addList, displayList } from './src/modules/app.js';
 
 describe('Add and Remove Testing', () => {
   document.body.innerHTML = `
@@ -9,29 +7,24 @@ describe('Add and Remove Testing', () => {
   <div id='toDoListItemContainer'></div>
   `;
 
-  const newTask = ('./src/modules/app.js');
 
   const Input = document.getElementById('toDoInput');
   const todolist = document.getElementById('toDoListItemContainer');
 
   test('adding item to list', () => {
-    Input.value = 'Task 1';
-    newTask.addList();
-    Input.value = 'Task 2';
-    newTask.addList();
-    Input.value = 'Task 3';
-    newTask.addList();
-    Input.value = 'Task 4';
-    newTask.addList();
-    const listItems = todolist.querySelectorAll('.toDoItem');
-    expect(listItems).toHaveLength(4);
+    addList('paint', false, 0 );
+    const localGet = JSON.parse(localStorage.getItem('listStorage'));
+    expect(localGet.length).toBe(1);
   });
 
   test('Removing item from list', () => {
-    const btn = document.querySelectorAll('.del-btn');
-    btn[0].click();
-    btn[1].click();
-    const listItems = todolist.querySelectorAll('.toDoItem');
-    expect(listItems).toHaveLength(3);
+    addList('work', false, 1 );
+    const localGet = JSON.parse(localStorage.getItem('listStorage'));
+    expect(localGet.length).toBe(2);
+    localGet.pop();
+    localStorage.setItem('listStorage', JSON.stringify(localGet));
+    displayList();
+    const todolist = document.getElementById('toDoListItemContainer');
+    expect(todolist.childElementCount).toBe(1);
   });
 });
