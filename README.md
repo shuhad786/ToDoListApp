@@ -15,6 +15,10 @@
 - GitHub: [@Shuhad786](https://github.com/Shuhad786)
 - LinkedIn: [shuhad-loofer](www.linkedin.com/in/shuhad-loofer)
 
+
+## Live Preview
+- https://shuhad786.github.io/ToDoListApp/
+
 ## Show your support
 
 Give a ⭐️ if you like this project!

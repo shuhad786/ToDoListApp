@@ -1,15 +1,22 @@
 /* eslint no-undefined: "error" */
 
-import ListTemplate from './templateList.js';
-import localGet from './storage.js';
-
-const todoListContainer = document.querySelector('.toDoListItemContainer');
+const todoListContainer = document.getElementById('toDoListItemContainer');
 
 const todoInput = document.querySelector('.toDoInput');
 
-const displayList = () => {
+class ListTemplate {
+  constructor(description, completed, index) {
+    this.description = description;
+    this.completed = completed;
+    this.index = index;
+    this.arrayList = JSON.parse(localStorage.getItem('listStorage')) || [];
+  }
+
+  
+displayList = () => {
+  
   todoListContainer.innerHTML = '';
-  localGet.forEach((item, id) => {
+  this.arrayList.forEach((item, id) => {
     todoListContainer.innerHTML
     += `
       <div class='toDoItem'>
@@ -22,44 +29,47 @@ const displayList = () => {
   });
 };
 
-const addList = (description, completed, index) => {
+addList = (description, completed, index) => {
   const listAdded = new ListTemplate(description, completed, index);
-  localGet.push(listAdded);
-  localStorage.setItem('listStorage', JSON.stringify(localGet));
+  this.arrayList.push(listAdded);
+  localStorage.setItem('listStorage', JSON.stringify(this.arrayList));
   setTimeout(() => {
     todoInput.value = '';
   }, 1000);
-  displayList();
+  this.displayList();
 };
 
-window.removeList = () => {
+removeList = () => {
   const deleteBtn = [...document.querySelectorAll('.fa-trash')];
   deleteBtn.forEach((item) => {
     item.addEventListener('click', () => {
-      localGet.splice(deleteBtn.indexOf(item), 1);
-      localGet.forEach((item, index) => {
+      this.arrayList.splice(deleteBtn.indexOf(item), 1);
+      this.arrayList.forEach((item, index) => {
         item.index = index + 1;
       });
-      localStorage.setItem('listStorage', JSON.stringify(localGet));
-      displayList();
+      localStorage.setItem('listStorage', JSON.stringify(this.arrayList));
+      this.displayList();
     });
   });
 };
 
-window.updateList = (id) => {
+updateList = (id) => {
   const updateInput = document.querySelector(`#input-${id}`).value;
   const updateCheckbox = document.querySelector(`#check-${id}`).checked;
-  const updatedArray = localGet.map((item) => {
+  const updatedArray = this.arrayList.map((item) => {
     if (item.index - 1 === id) {
       item.description = updateInput;
     }
     if (item.index - 1 === id) {
       item.completed = updateCheckbox;
     }
+   
     return item;
   });
-
+  console.log(updateCheckbox)
+  
   localStorage.setItem('listStorage', JSON.stringify(updatedArray));
 };
+}
 
-export { addList, displayList };
+module.exports = ListTemplate;
