@@ -1,7 +1,3 @@
-/**
- * @jest-environment jsdom
- */
-
 /*eslint global-require: "error"*/
 
 describe('Add and Remove Testing', () => {
@@ -11,7 +7,7 @@ describe('Add and Remove Testing', () => {
   <div id='toDoListItemContainer'></div>
   `;
 
-  const newTask = g('./src/modules/app.js');
+  const newTask = ('./src/modules/app.js');
 
   const Input = document.getElementById('toDoInput');
   const todolist = document.getElementById('toDoListItemContainer');

@@ -4,7 +4,7 @@
   --bg-color: #16161d;
   --border-radius: 5px;
   --page-bg-color: rgba(40, 34, 54, 0.473);
-  --item-bg-color: rgba(54, 27, 116, 0.445);
+  
   --text-color: white;
 }
 
@@ -21,14 +21,14 @@ body {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  background-color: var(--bg-color);
+  background-color: #16161d;
 }
 
 .page {
   flex: 1;
   max-width: 75%;
   min-height: 85%;
-  background-color: var(--page-bg-color);
+  background-color: rgba(40, 34, 54, 0.473);
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -80,12 +80,12 @@ body {
 .toDoInput {
   min-height: 2em;
   width: 50%;
-  border-radius: var(--border-radius);
+  border-radius: 5px;
   outline: none;
   border: none;
   padding: 0 0.3em;
   text-align: center;
-  background-color: var(--bg-color);
+  background-color: #16161d;
   color: var(--text-color);
 }
 
@@ -94,10 +94,10 @@ body {
 }
 
 .addToDo {
-  color: var(--text-color);
+  color: white;
   border: none;
-  background-color: var(--bg-color);
-  border-radius: var(--border-radius);
+  background-color: #16161d;
+  border-radius: 5px;
   outline: none;
   padding: 0.4em;
   justify-self: left;
@@ -109,8 +109,8 @@ body {
   flex-direction: column;
   flex-wrap: wrap;
   gap: 1em;
-  background-color: var(--bg-color);
-  border-radius: var(--border-radius);
+  background-color: #16161d;
+  border-radius: 5px;
   min-height: 100%;
   align-items: center;
   padding: 1em 0;
@@ -122,17 +122,17 @@ body {
   min-width: 35%;
   height: 2.5em;
   gap: 0.5em;
-  background-color: var(--page-bg-color);
+  background-color: rgba(40, 34, 54, 0.473);
   padding: 0;
   align-items: center;
-  border-radius: var(--border-radius);
+  border-radius: 5px;
 }
 
 .item {
   height: 1.4em;
   width: 1.4em;
-  border-radius: var(--border-radius);
-  background-color: var(--bg-color);
+  border-radius: 5px;
+  background-color: #16161d;
 }
 
 .findInput {
@@ -145,8 +145,8 @@ body {
   width: 30%;
   align-self: center;
   padding: 0.4em;
-  border-radius: var(--border-radius);
-  color: var(--text-color);
+  border-radius: 5px;
+  color: white;
   border: none;
   background: radial-gradient(#05d6d9, #f907fd);
   letter-spacing: 0.1em;
