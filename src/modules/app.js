@@ -1,7 +1,5 @@
 /* eslint no-undefined: "error" */
 
-//const todoListContainer = document.getElementById('toDoListItemContainer');
-
 const todoInput = document.querySelector('.toDoInput');
 
 class ListTemplate {

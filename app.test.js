@@ -7,18 +7,14 @@ describe('Add and Remove Testing', () => {
   <div id='toDoListItemContainer'></div>
   `;
 
-
-  const Input = document.getElementById('toDoInput');
-  const todolist = document.getElementById('toDoListItemContainer');
-
   test('adding item to list', () => {
-    addList('paint', false, 0 );
+    addList('paint', false, 0);
     const localGet = JSON.parse(localStorage.getItem('listStorage'));
     expect(localGet.length).toBe(1);
   });
 
   test('Removing item from list', () => {
-    addList('work', false, 1 );
+    addList('work', false, 1);
     const localGet = JSON.parse(localStorage.getItem('listStorage'));
     expect(localGet.length).toBe(2);
     localGet.pop();
