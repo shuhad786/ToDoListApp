@@ -9,84 +9,81 @@
 	}
 })(self, () => {
 return /******/ (() => { // webpackBootstrap
-/******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
 /***/ "./src/modules/app.js":
 /*!****************************!*\
   !*** ./src/modules/app.js ***!
   \****************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ ((module) => {
 
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "addList": () => (/* binding */ addList),
-/* harmony export */   "displayList": () => (/* binding */ displayList)
-/* harmony export */ });
-/* harmony import */ var _templateList_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./templateList.js */ "./src/modules/templateList.js");
-/* harmony import */ var _storage_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./storage.js */ "./src/modules/storage.js");
 /* eslint no-undefined: "error" */
-
-
-const todoListContainer = document.querySelector('.toDoListItemContainer');
+const todoListContainer = document.getElementById('toDoListItemContainer');
 const todoInput = document.querySelector('.toDoInput');
 
-const displayList = () => {
-  todoListContainer.innerHTML = '';
-  _storage_js__WEBPACK_IMPORTED_MODULE_1__["default"].forEach((item, id) => {
-    todoListContainer.innerHTML += `
+class ListTemplate {
+  constructor(description, completed, index) {
+    this.description = description;
+    this.completed = completed;
+    this.index = index;
+    this.arrayList = JSON.parse(localStorage.getItem('listStorage')) || [];
+  }
+
+  displayList = () => {
+    todoListContainer.innerHTML = '';
+    this.arrayList.forEach((item, id) => {
+      todoListContainer.innerHTML += `
       <div class='toDoItem'>
         <input class='item' id='check-${id}', "completed")' type='checkbox' ${item.completed ? 'checked' : ''} onclick='updateList(${id}, "completed")'>
         <input type='text' class='findInput' id='input-${id}' value=${item.description} />
         <i onclick='updateList(${id}, "description")' class='fa-solid fa-file-pen' id='options-${id}'></i>
-        <i onclick='removeList(${id})' class='fa-solid fa-trash' id='delete-${id}'></i>
+        <i onclick='this.removeList(${id})' class='fa-solid fa-trash del-btn' id='delete-${id}'></i>
       </div>
     `;
-  });
-};
-
-const addList = (description, completed, index) => {
-  const listAdded = new _templateList_js__WEBPACK_IMPORTED_MODULE_0__["default"](description, completed, index);
-  _storage_js__WEBPACK_IMPORTED_MODULE_1__["default"].push(listAdded);
-  localStorage.setItem('listStorage', JSON.stringify(_storage_js__WEBPACK_IMPORTED_MODULE_1__["default"]));
-  setTimeout(() => {
-    todoInput.value = '';
-  }, 1000);
-  displayList();
-};
-
-window.removeList = () => {
-  const deleteBtn = [...document.querySelectorAll('.fa-trash')];
-  deleteBtn.forEach(item => {
-    item.addEventListener('click', () => {
-      _storage_js__WEBPACK_IMPORTED_MODULE_1__["default"].splice(deleteBtn.indexOf(item), 1);
-      _storage_js__WEBPACK_IMPORTED_MODULE_1__["default"].forEach((item, index) => {
-        item.index = index + 1;
-      });
-      localStorage.setItem('listStorage', JSON.stringify(_storage_js__WEBPACK_IMPORTED_MODULE_1__["default"]));
-      displayList();
     });
-  });
-};
+  };
+  addList = (description, completed, index) => {
+    const listAdded = new ListTemplate(description, completed, index);
+    this.arrayList.push(listAdded);
+    localStorage.setItem('listStorage', JSON.stringify(this.arrayList));
+    setTimeout(() => {
+      todoInput.value = '';
+    }, 1000);
+    this.displayList();
+  };
+  removeList = () => {
+    const deleteBtn = [...document.querySelectorAll('.fa-trash')];
+    deleteBtn.forEach(item => {
+      item.addEventListener('click', () => {
+        this.arrayList.splice(deleteBtn.indexOf(item), 1);
+        this.arrayList.forEach((item, index) => {
+          item.index = index + 1;
+        });
+        localStorage.setItem('listStorage', JSON.stringify(this.arrayList));
+        this.displayList();
+      });
+    });
+  };
+  updateList = id => {
+    const updateInput = document.querySelector(`#input-${id}`).value;
+    const updateCheckbox = document.querySelector(`#check-${id}`).checked;
+    const updatedArray = this.arrayList.map(item => {
+      if (item.index - 1 === id) {
+        item.description = updateInput;
+      }
 
-window.updateList = id => {
-  const updateInput = document.querySelector(`#input-${id}`).value;
-  const updateCheckbox = document.querySelector(`#check-${id}`).checked;
-  const updatedArray = _storage_js__WEBPACK_IMPORTED_MODULE_1__["default"].map(item => {
-    if (item.index - 1 === id) {
-      item.description = updateInput;
-    }
+      if (item.index - 1 === id) {
+        item.completed = updateCheckbox;
+      }
 
-    if (item.index - 1 === id) {
-      item.completed = updateCheckbox;
-    }
+      return item;
+    });
+    console.log(updateCheckbox);
+    localStorage.setItem('listStorage', JSON.stringify(updatedArray));
+  };
+}
 
-    return item;
-  });
-  localStorage.setItem('listStorage', JSON.stringify(updatedArray));
-};
-
-
+module.exports = ListTemplate;
 
 /***/ }),
 
@@ -96,15 +93,13 @@ window.updateList = id => {
   \*********************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _storage_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./storage.js */ "./src/modules/storage.js");
-
-
 const clearCompleted = () => {
-  let inCompleted = _storage_js__WEBPACK_IMPORTED_MODULE_0__["default"].filter(item => {
+  let inCompleted = JSON.parse(localStorage.getItem('listStorage')).filter(item => {
     if (!item.completed) {
       return item;
     }
@@ -123,48 +118,13 @@ const clearCompleted = () => {
 
 /***/ }),
 
-/***/ "./src/modules/storage.js":
-/*!********************************!*\
-  !*** ./src/modules/storage.js ***!
-  \********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-const localGet = JSON.parse(localStorage.getItem('listStorage')) || [];
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (localGet);
-
-/***/ }),
-
-/***/ "./src/modules/templateList.js":
-/*!*************************************!*\
-  !*** ./src/modules/templateList.js ***!
-  \*************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ ListTemplate)
-/* harmony export */ });
-class ListTemplate {
-  constructor(description, completed, index) {
-    this.description = description;
-    this.completed = completed;
-    this.index = index;
-  }
-
-}
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/styles.css":
 /*!**************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/styles.css ***!
   \**************************************************************/
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -192,6 +152,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, ":root {\r\n  --bg-color: #16161d;\r\n 
   \*****************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 /*
@@ -303,6 +264,7 @@ module.exports = function (cssWithMappingToString) {
   \************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 module.exports = function (item) {
@@ -334,6 +296,7 @@ module.exports = function (item) {
   \************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
@@ -388,6 +351,7 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
   \****************************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 var stylesInDOM = [];
@@ -501,6 +465,7 @@ module.exports = function (list, options) {
   \********************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 var memo = {};
@@ -549,6 +514,7 @@ module.exports = insertBySelector;
   \**********************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -569,6 +535,7 @@ module.exports = insertStyleElement;
   \**********************************************************************************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -590,6 +557,7 @@ module.exports = setAttributesWithoutAttributes;
   \***************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -669,6 +637,7 @@ module.exports = domAPI;
   \*********************************************************************/
 /***/ ((module) => {
 
+"use strict";
 
 
 /* istanbul ignore next  */
@@ -762,33 +731,34 @@ module.exports = styleTagTransform;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other modules in the chunk.
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
 (() => {
+"use strict";
 /*!**********************!*\
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./styles.css */ "./src/styles.css");
 /* harmony import */ var _modules_app_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./modules/app.js */ "./src/modules/app.js");
+/* harmony import */ var _modules_app_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_modules_app_js__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _modules_clearAll_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./modules/clearAll.js */ "./src/modules/clearAll.js");
-/* harmony import */ var _modules_storage_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/storage.js */ "./src/modules/storage.js");
-
 
 
 
 const addBtn = document.querySelector('.addToDo');
 const todoInput = document.querySelector('.toDoInput');
 const clearAll = document.querySelector('.clearCompleted');
+const task = new (_modules_app_js__WEBPACK_IMPORTED_MODULE_1___default())();
 window.addEventListener('load', () => {
-  (0,_modules_app_js__WEBPACK_IMPORTED_MODULE_1__.displayList)();
+  task.displayList();
 });
 addBtn.addEventListener('click', () => {
-  (0,_modules_app_js__WEBPACK_IMPORTED_MODULE_1__.addList)(todoInput.value, false, _modules_storage_js__WEBPACK_IMPORTED_MODULE_3__["default"].length + 1);
-  (0,_modules_app_js__WEBPACK_IMPORTED_MODULE_1__.displayList)();
+  task.addList(todoInput.value, false, JSON.parse(localStorage.getItem('listStorage')).length + 1);
+  task.displayList();
 });
 clearAll.addEventListener('click', () => {
   (0,_modules_clearAll_js__WEBPACK_IMPORTED_MODULE_2__["default"])();
-  (0,_modules_app_js__WEBPACK_IMPORTED_MODULE_1__.displayList)();
+  task.displayList();
 });
 })();
 

@@ -1,7 +1,5 @@
-import localGet from './storage.js';
-
 const clearCompleted = () => {
-  let inCompleted = localGet.filter((item) => {
+  let inCompleted = JSON.parse(localStorage.getItem('listStorage')).filter((item) => {
     if (!item.completed) {
       return item;
     }
