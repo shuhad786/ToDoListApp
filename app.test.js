@@ -43,7 +43,7 @@ describe('clear all and edit Testing', () => {
     expect(todolist.children[0].children[1].value).toBe('changed');
   });
 
-  test(' should update completed to true', () => {
+  test('Should update completed to true', () => {
     const localGet = JSON.parse(localStorage.getItem('listStorage'));
     localGet[0].completed = true;
     localStorage.setItem('listStorage', JSON.stringify(localGet));
@@ -52,12 +52,24 @@ describe('clear all and edit Testing', () => {
     expect(todolist.children[0].children[0].checked).toBe(true);
   });
 
-  test(' should update completed to false', () => {
+  test('Should update completed to false', () => {
     const localGet = JSON.parse(localStorage.getItem('listStorage'));
     localGet[0].completed = false;
     localStorage.setItem('listStorage', JSON.stringify(localGet));
     displayList();
     const todolist = document.getElementById('toDoListItemContainer');
     expect(todolist.children[0].children[0].checked).toBe(false);
+  });
+
+  test('Should remove all completed true', () => {
+    const localGet = JSON.parse(localStorage.getItem('listStorage'));
+    localGet.pop();
+    const newData1 = { description: 'exercise', completed: true, index: 0 };
+    const newData2 = { description: 'play', completed: true, index: 1 };
+    localGet.push(newData1);
+    localGet.push(newData2);
+    const Completed = jest.fn(() => localGet.filter((item) => item.completed === true));
+    const completedItem = Completed();
+    expect(completedItem).toHaveLength(2);
   });
 });
