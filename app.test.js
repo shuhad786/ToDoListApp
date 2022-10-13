@@ -1,4 +1,4 @@
-import { addList, displayList, updateList } from './src/modules/app.js';
+import { addList, displayList } from './src/modules/app.js';
 
 describe('Add and Remove Testing', () => {
   document.body.innerHTML = `
@@ -25,8 +25,8 @@ describe('Add and Remove Testing', () => {
   });
 });
 
-  describe('Add and Remove Testing', () => {
-    document.body.innerHTML = `
+describe('clear all and edit Testing', () => {
+  document.body.innerHTML = `
     <input id='toDoInput'>
     <button id='addBtn'></button>
     <div id='toDoListItemContainer'></div>
@@ -41,5 +41,23 @@ describe('Add and Remove Testing', () => {
     displayList();
     const todolist = document.getElementById('toDoListItemContainer');
     expect(todolist.children[0].children[1].value).toBe('changed');
+  });
+
+  test(' should update completed to true', () => {
+    const localGet = JSON.parse(localStorage.getItem('listStorage'));
+    localGet[0].completed = true;
+    localStorage.setItem('listStorage', JSON.stringify(localGet));
+    displayList();
+    const todolist = document.getElementById('toDoListItemContainer');
+    expect(todolist.children[0].children[0].checked).toBe(true);
+  });
+
+  test(' should update completed to false', () => {
+    const localGet = JSON.parse(localStorage.getItem('listStorage'));
+    localGet[0].completed = false;
+    localStorage.setItem('listStorage', JSON.stringify(localGet));
+    displayList();
+    const todolist = document.getElementById('toDoListItemContainer');
+    expect(todolist.children[0].children[0].checked).toBe(false);
   });
 });
