@@ -40,7 +40,6 @@ describe('Add and Remove Testing', () => {
     localStorage.setItem('listStorage', JSON.stringify(localGet));
     displayList();
     const todolist = document.getElementById('toDoListItemContainer');
-    console.log(localGet)
     expect(todolist.children[0].children[1].value).toBe('changed');
   });
 });
