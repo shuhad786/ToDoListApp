@@ -55,9 +55,9 @@ window.removeList = () => {
   });
 };
 
-window.updateList = (id) => {
-  const updateInput = document.querySelector(`#input-${id}`).value;
-  const updateCheckbox = document.querySelector(`#check-${id}`).checked;
+const updateList = (updateInput, updateCheckbox, id) => {
+  updateInput = document.querySelector(`#input-${id}`).value;
+  updateCheckbox = document.querySelector(`#check-${id}`).checked;
   const updatedArray = task.arrayList.map((item) => {
     if (item.index - 1 === id) {
       item.description = updateInput;
@@ -72,4 +72,4 @@ window.updateList = (id) => {
   localStorage.setItem('listStorage', JSON.stringify(updatedArray));
 };
 
-export { addList, displayList };
+export { addList, displayList, updateList };

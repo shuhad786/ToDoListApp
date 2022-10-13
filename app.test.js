@@ -1,4 +1,4 @@
-import { addList, displayList } from './src/modules/app.js';
+import { addList, displayList, updateList } from './src/modules/app.js';
 
 describe('Add and Remove Testing', () => {
   document.body.innerHTML = `
@@ -34,13 +34,11 @@ describe('clear all and edit Testing', () => {
 
   test('Should update description', () => {
     const localGet = JSON.parse(localStorage.getItem('listStorage'));
-    addList('paint', false, 0);
-    expect(localGet.length).toBe(1);
-    localGet[0].description = 'changed';
+    updateList('paint', false, 0);
     localStorage.setItem('listStorage', JSON.stringify(localGet));
     displayList();
     const todolist = document.getElementById('toDoListItemContainer');
-    expect(todolist.children[0].children[1].value).toBe('changed');
+    expect(todolist.children[0].children[1].value).toBe('paint');
   });
 
   test('Should update completed to true', () => {
